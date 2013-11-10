@@ -68,7 +68,13 @@ django_conversions.update({
     FIELD_TYPE.TIME: conversion_adapter(util.typecast_time),
     FIELD_TYPE.DECIMAL: conversion_adapter(util.typecast_decimal),
     FIELD_TYPE.NEWDECIMAL: conversion_adapter(util.typecast_decimal),
-    FIELD_TYPE.DATETIME: datetime_or_None_with_timezone_support,
+#This line result in an exception in case of DATETIME field: 
+#  File ".../PyMySQL-0.6.1-py3.2.egg/pymysql/connections.py", line 1154, in _read_row_from_packet
+#    data = converter(data)
+#TypeError: datetime_or_None_with_timezone_support() takes exactly 3 arguments (1 given)
+#Fall back to pymysql converter
+#
+#    FIELD_TYPE.DATETIME: datetime_or_None_with_timezone_support,
 })
 
 
